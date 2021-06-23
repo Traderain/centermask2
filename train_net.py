@@ -153,8 +153,9 @@ def setup(args):
 
 
 def main(args):
-    register_coco_instances("blob_train", {}, "/content/blob/train/coco.json", "/content/blob/train/")
-    register_coco_instances("blob_val", {}, "/content/blob/val/coco.json", "/content/blob/val/")
+    register_coco_instances("blob_train", {}, "/home/bb20/machine_learning/CenterMask2_Train/blob/train/coco.json", "/home/bb20/machine_learning/CenterMask2_Train/blob/train/")
+    register_coco_instances("blob_val", {}, "/home/bb20/machine_learning/CenterMask2_Train/blob/val/coco.json", "/home/bb20/machine_learning/CenterMask2_Train/blob/val/")
+    #register_coco_instances("blob_test", {}, "/home/bb20/machine_learning/CenterMask2_Train/blob/test/coco.json", "/home/bb20/machine_learning/CenterMask2_Train/blob/test/")
     cfg = setup(args)
 
     if args.eval_only:
