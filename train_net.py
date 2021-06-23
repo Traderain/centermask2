@@ -2,6 +2,7 @@
 # Modified by Youngwan Lee (ETRI), 2020. All Rights Reserved.
 import logging
 import os
+import sys
 from collections import OrderedDict
 import torch
 from torch.nn.parallel import DistributedDataParallel
@@ -153,9 +154,9 @@ def setup(args):
 
 
 def main(args):
-    register_coco_instances("blob_train", {}, "/home/bb20/machine_learning/CenterMask2_Train/blob/train/coco.json", "/home/bb20/machine_learning/CenterMask2_Train/blob/train/")
-    register_coco_instances("blob_val", {}, "/home/bb20/machine_learning/CenterMask2_Train/blob/val/coco.json", "/home/bb20/machine_learning/CenterMask2_Train/blob/val/")
-    #register_coco_instances("blob_test", {}, "/home/bb20/machine_learning/CenterMask2_Train/blob/test/coco.json", "/home/bb20/machine_learning/CenterMask2_Train/blob/test/")
+    register_coco_instances('blob_train', {}, f'{dataset}/train/coco.json', f'{dataset}/train/')
+    register_coco_instances('blob_val', {}, f'{dataset}/val/coco.json', f'{dataset}/val/')
+    #register_coco_instances('blob_test', {}, f'{dataset}/test/coco.json', f'{dataset}/test/')
     cfg = setup(args)
 
     if args.eval_only:
@@ -188,6 +189,7 @@ def main(args):
 
 
 if __name__ == "__main__":
+    dataset = sys.stdin.readline().strip().replace('"', '')
     args = default_argument_parser().parse_args()
     print("Command Line Args:", args)
     launch(
