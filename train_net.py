@@ -141,6 +141,29 @@ class Trainer(DefaultTrainer):
         return res
 
 
+def download_missing_base_model(cfg):
+    print('Base model not found!')
+    print('Downloading...')
+    url = 'https://www.dropbox.com/s/q98pypf96rhtd8y/vovnet39_ese_detectron2.pth?dl=1'
+    fname = cfg.MODEL.WEIGHTS
+
+    import requests
+    from tqdm import tqdm
+
+    resp = requests.get(url, stream=True)
+    total = int(resp.headers.get('content-length', 0))
+    with open(fname, 'wb') as file, tqdm(
+        desc=fname,
+        total=total,
+        unit='iB',
+        unit_scale=True,
+        unit_divisor=1024,
+    ) as bar:
+        for data in resp.iter_content(chunk_size=1024):
+            size = file.write(data)
+            bar.update(size)
+
+
 def setup(args):
     """
     Create configs and perform basic setups.
@@ -158,6 +181,9 @@ def main(args):
     register_coco_instances('blob_val', {}, f'{dataset}/val/coco.json', f'{dataset}/val/')
     #register_coco_instances('blob_test', {}, f'{dataset}/test/coco.json', f'{dataset}/test/')
     cfg = setup(args)
+
+    if not os.path.exists(cfg.MODEL.WEIGHTS):
+        download_missing_base_model(cfg)
 
     if args.eval_only:
         model = Trainer.build_model(cfg)

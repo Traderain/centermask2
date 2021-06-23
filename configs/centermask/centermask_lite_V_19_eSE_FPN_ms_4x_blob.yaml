@@ -1,11 +1,10 @@
 _BASE_: "Base-CenterMask-Lite-VoVNet_blob.yaml"
 MODEL:
-  WEIGHTS: "https://www.dropbox.com/s/q98pypf96rhtd8y/vovnet39_ese_detectron2.pth?dl=1"
+  WEIGHTS: "datasets/vovnet39_ese_detectron2.pth"
   VOVNET:
     CONV_BODY : "V-39-eSE"
 SOLVER:
   STEPS: (10000, 20000, 30000, 40000, 50000)
   MAX_ITER: 60000
-OUTPUT_DIR: "/home/bb20/machine_learning/CenterMask2_Train/kaldyum_legjobb_maskrcnnes_nemfelvagott_slowlr4_09_asd3kicsiveljobb/"
 TEST:
   DETECTIONS_PER_IMAGE: 1000
